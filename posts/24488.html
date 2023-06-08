@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/pfp.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pfp.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pfp.png">
+  <link rel="mask-icon" href="/images/pfp.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"geinzit.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="题目描述： Now we are planning to construct a big chimney. The chimney’s section is a 3×3 square and the center of it will have nothing like the picture below. Now we only have a lot of bricks whose siz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Constructing Chimney（HDU-4332）">
+<meta property="og:url" content="http://geinzit.github.io/posts/24488.html">
+<meta property="og:site_name" content="HeinzHuang">
+<meta property="og:description" content="题目描述： Now we are planning to construct a big chimney. The chimney’s section is a 3×3 square and the center of it will have nothing like the picture below. Now we only have a lot of bricks whose siz">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://acm.hdu.edu.cn/data/images/C401-1002-1.jpg">
+<meta property="article:published_time" content="2019-03-01T14:10:32.000Z">
+<meta property="article:modified_time" content="2023-06-08T18:08:33.244Z">
+<meta property="article:author" content="Maodian Huang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://acm.hdu.edu.cn/data/images/C401-1002-1.jpg">
+
+<link rel="canonical" href="http://geinzit.github.io/posts/24488.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Constructing Chimney（HDU-4332） | HeinzHuang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HeinzHuang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Eudaimonia</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://geinzit.github.io/posts/24488.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/pfp.png">
+      <meta itemprop="name" content="Maodian Huang">
+      <meta itemprop="description" content="A blog where I (try to) post regular updates about myself and stuffs I am interested in">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HeinzHuang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Constructing Chimney（HDU-4332）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-01 22:10:32" itemprop="dateCreated datePublished" datetime="2019-03-01T22:10:32+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-06-09 02:08:33" itemprop="dateModified" datetime="2023-06-09T02:08:33+08:00">2023-06-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI-related/" itemprop="url" rel="index"><span itemprop="name">OI-related</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="题目描述">题目描述：</h2>
+<p>Now we are planning to construct a big chimney. The chimney’s section
+is a 3×3 square and the center of it will have nothing like the picture
+below. Now we only have a lot of bricks whose size if 1×1×2, and we want
+to build a chimney whose height is N, so can help us to calculate how
+many ways we can build the chimney? The answer may be very large, so you
+can just tell the answer’s remainder divided by 1000000007.</p>
+<p><img src="http://acm.hdu.edu.cn/data/images/C401-1002-1.jpg" /></p>
+<p>用1×1×2的砖头摆出如图所示的烟囱，可以横着摆也可以竖着摆，求摆出n层高的烟囱会有多少种不同的方案。
+<span id="more"></span> ## 思路：
+这题其实最难想的就是dp转移，变态的细节非常的多。</p>
+<p>首先要考虑的就是状态定义，若是一层一层的进行转移我们都考虑他们所在当前层的状态，<strong>我们用一个8位二进制数来表示当前层的状态，当然，1表示砖，0表示没有砖。</strong></p>
+<p>若是暴力转移我们便有： <span
+class="math inline">\(dp[i][stat]=dp[i-1][stat2]*met[stat][stat2]\)</span></p>
+<p>注意<span
+class="math inline">\(met[stat][stat2]\)</span>表示<strong>状态由当前层的stat2到下一层的stat的方案数</strong></p>
+<p>若是直接这样转移，复杂度绝对爆炸，所以就考虑用矩阵乘法快速幂来进行操作。</p>
+<p>不过在开始定义矩阵时，先想一想：就算使用矩阵优化，复杂度也是<span
+class="math inline">\(O(256^3*log(n))\)</span>,还是很可能会超时（不过卡常卡的好话或许也可以吧。。个人没试过）。那么咋们看一下这<span
+class="math inline">\(256\)</span>个状态（毕竟那个log也没什么好优化的），应该比较好想到<strong>所有<span
+class="math inline">\(1\)</span>的个数为奇数个的状态都是无效的</strong>，因为这样就无法把当前层填满而又不会填到下一层了。这样复杂度就够了，不过好像可以再把所有旋转相同的状态也去掉，使得最后只有七十多种状态，不过旋转判定有点复杂，我就懒得想了。。。</p>
+<p>最后就是预处理最初矩阵，其实就是把所有能够相互转移的状态找出，<strong>注意是当前层的状态转移到下一层的状态，所以<span
+class="math inline">\(0\)</span>和<span
+class="math inline">\(1\)</span>是哪一层的<span
+class="math inline">\(0\)</span>和<span
+class="math inline">\(1\)</span>分清楚</strong>，别的也没什么了，判是否可行的方法有很多，就不在过多赘述了。</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR(i,l,r) for(int i=l,END=r;i&lt;=END;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOR(i,r,l) for(int i=r,END=l;i&gt;=END;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> loop(i,n) for(int i=0,END=n;i&lt;END;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mms(a,x) memset(a,x,sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> sf scanf</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pf printf</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) ((x)&amp;(-x))</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> P=<span class="number">1e9</span>+<span class="number">7</span>,N=(<span class="number">1</span>&lt;&lt;<span class="number">8</span>),M=N&gt;&gt;<span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">bool</span> flag[N];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Matrix</span>&#123;<span class="comment">//矩阵 </span></span><br><span class="line">	<span class="type">int</span> num[N][N];</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;<span class="built_in">mms</span>(num,<span class="number">0</span>);&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;<span class="built_in">clear</span>();<span class="built_in">loop</span>(i,M)num[i][i]=<span class="number">1</span>;&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span></span>&#123;<span class="built_in">loop</span>(i,M)<span class="built_in">loop</span>(j,M)<span class="built_in">pf</span>(<span class="string">&quot;%d%c&quot;</span>,num[i][j],j==M<span class="number">-1</span>?<span class="string">&#x27;\n&#x27;</span>:<span class="string">&#x27; &#x27;</span>);&#125;</span><br><span class="line">	Matrix <span class="keyword">operator</span>*(<span class="type">const</span> Matrix &amp;A)<span class="type">const</span>&#123;</span><br><span class="line">		Matrix ans;</span><br><span class="line">		ans.<span class="built_in">clear</span>();</span><br><span class="line">		<span class="built_in">loop</span>(i,M)<span class="built_in">loop</span>(j,M)</span><br><span class="line">			<span class="built_in">loop</span>(k,M)ans.num[i][j]=(ans.num[i][j]+<span class="number">1ll</span>*num[i][k]*A.num[k][j])%P;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;Pow[<span class="number">35</span>];</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">is1</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> pos)</span></span>&#123;<span class="keyword">return</span> (x&gt;&gt;pos)&amp;<span class="number">1</span>;&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;<span class="comment">//判定是否可行 </span></span><br><span class="line">	<span class="type">int</span> mark=<span class="number">2</span>;</span><br><span class="line">	<span class="built_in">loop</span>(i,<span class="number">8</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">is1</span>(x,i)&amp;&amp;<span class="built_in">is1</span>(y,i))&#123;<span class="comment">//若在上一层已有，那么只能横着放砖块，所以它的下一位也要是1 </span></span><br><span class="line">			<span class="keyword">if</span>(i&lt;<span class="number">7</span>&amp;&amp;<span class="built_in">is1</span>(x,i+<span class="number">1</span>)&amp;&amp;<span class="built_in">is1</span>(y,i+<span class="number">1</span>))i++;</span><br><span class="line">			<span class="keyword">else</span> &#123;mark--;<span class="keyword">break</span>;&#125;;	</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">is1</span>(x,i)&amp;&amp;!<span class="built_in">is1</span>(y,i))&#123;mark--;<span class="keyword">break</span>;&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	x|=(x&amp;<span class="number">1</span>)&lt;&lt;<span class="number">8</span>;</span><br><span class="line">	y|=(y&amp;<span class="number">1</span>)&lt;&lt;<span class="number">8</span>;</span><br><span class="line">	<span class="comment">//把第一位移到最后面</span></span><br><span class="line">	<span class="built_in">DOR</span>(i,<span class="number">8</span>,<span class="number">1</span>)&#123;<span class="comment">//到这再来一次，这次能够使第一个和最后一个也考虑到 </span></span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">is1</span>(x,i)&amp;&amp;<span class="built_in">is1</span>(y,i))&#123;<span class="comment">//同上</span></span><br><span class="line">			<span class="keyword">if</span>(i&gt;<span class="number">1</span>&amp;&amp;<span class="built_in">is1</span>(x,i<span class="number">-1</span>)&amp;&amp;<span class="built_in">is1</span>(y,i<span class="number">-1</span>))i--;</span><br><span class="line">			<span class="keyword">else</span> &#123;mark--;<span class="keyword">break</span>;&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(!<span class="built_in">is1</span>(x,i)&amp;&amp;!<span class="built_in">is1</span>(y,i))&#123;mark--;<span class="keyword">break</span>;&#125;;		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> mark&gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">loop</span>(i,N)&#123;</span><br><span class="line">		<span class="type">int</span> t=i,cnt=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(;t;t^=<span class="built_in">lowbit</span>(t))cnt^=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(!cnt)flag[i]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> bx=<span class="number">0</span>,by=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">loop</span>(i,N)&#123;<span class="comment">//预处理矩阵 </span></span><br><span class="line">		<span class="keyword">if</span>(flag[i])&#123;</span><br><span class="line">			by=<span class="number">0</span>;</span><br><span class="line">			<span class="built_in">loop</span>(j,N)<span class="keyword">if</span>(flag[j])</span><br><span class="line">				Pow[<span class="number">0</span>].num[bx][by++]=<span class="built_in">check</span>(i,j);</span><br><span class="line">			bx++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	Pow[<span class="number">0</span>].num[M<span class="number">-1</span>][M<span class="number">-1</span>]++;</span><br><span class="line">	<span class="built_in">FOR</span>(i,<span class="number">1</span>,<span class="number">32</span>)Pow[i]=Pow[i<span class="number">-1</span>]*Pow[i<span class="number">-1</span>];<span class="comment">//预处理快速幂矩阵 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">qpow</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	Matrix res;</span><br><span class="line">	res.<span class="built_in">init</span>();</span><br><span class="line">	<span class="built_in">loop</span>(i,<span class="number">32</span>)<span class="keyword">if</span>(<span class="built_in">is1</span>(n,i))res=res*Pow[i];</span><br><span class="line">	<span class="keyword">return</span> res.num[M<span class="number">-1</span>][M<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">init</span>();</span><br><span class="line">	<span class="type">int</span> T,kase=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">sf</span>(<span class="string">&quot;%d&quot;</span>,&amp;T);</span><br><span class="line">	<span class="keyword">while</span>(T--)&#123;</span><br><span class="line">		<span class="built_in">sf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">		<span class="built_in">pf</span>(<span class="string">&quot;Case %d: %d\n&quot;</span>,++kase,<span class="built_in">qpow</span>(n));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/18718.html" rel="prev" title="50 years, 50 colors （HDU-1498）">
+      <i class="fa fa-chevron-left"></i> 50 years, 50 colors （HDU-1498）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/42757.html" rel="next" title="Subsequence Count（HDU-6155）">
+      Subsequence Count（HDU-6155） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.1.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maodian Huang"
+      src="/images/pfp.png">
+  <p class="site-author-name" itemprop="name">Maodian Huang</p>
+  <div class="site-description" itemprop="description">A blog where I (try to) post regular updates about myself and stuffs I am interested in</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Geinzit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Geinzit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heinz03huang@gmail.com" title="E-Mail → mailto:heinz03huang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/HuangHeinz" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;HuangHeinz" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@mdhuang" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@mdhuang" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/heinz_huang" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;heinz_huang" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/HeinzHuang" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;HeinzHuang" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-code"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maodian Huang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

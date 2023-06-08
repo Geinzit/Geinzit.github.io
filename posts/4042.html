@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/pfp.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pfp.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pfp.png">
+  <link rel="mask-icon" href="/images/pfp.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"geinzit.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Magic Tree（CF-1193B CEOI 2019 Day 2） 题目描述： 给一个\(n\)节点的树，其中有\(m\)个点有果实，分别在编号为\(pi\)的点上，在第\(di\)天成熟，在成熟的那天收割有\(wi\)的贡献。给出\(K,di&lt;&#x3D;K\). 通过断开树上的边来收割果实，每断开一个边，取不包含根的子树，获得上面所有成熟果实的贡献值，剩下的全部丢弃。每天都可以断任意">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Magic Tree（CF-1193B CEOI 2019 Day 2）">
+<meta property="og:url" content="http://geinzit.github.io/posts/4042.html">
+<meta property="og:site_name" content="HeinzHuang">
+<meta property="og:description" content="Magic Tree（CF-1193B CEOI 2019 Day 2） 题目描述： 给一个\(n\)节点的树，其中有\(m\)个点有果实，分别在编号为\(pi\)的点上，在第\(di\)天成熟，在成熟的那天收割有\(wi\)的贡献。给出\(K,di&lt;&#x3D;K\). 通过断开树上的边来收割果实，每断开一个边，取不包含根的子树，获得上面所有成熟果实的贡献值，剩下的全部丢弃。每天都可以断任意">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-29T11:39:46.000Z">
+<meta property="article:modified_time" content="2023-06-08T18:04:48.305Z">
+<meta property="article:author" content="Maodian Huang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://geinzit.github.io/posts/4042.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Magic Tree（CF-1193B CEOI 2019 Day 2） | HeinzHuang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HeinzHuang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Eudaimonia</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://geinzit.github.io/posts/4042.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/pfp.png">
+      <meta itemprop="name" content="Maodian Huang">
+      <meta itemprop="description" content="A blog where I (try to) post regular updates about myself and stuffs I am interested in">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HeinzHuang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Magic Tree（CF-1193B CEOI 2019 Day 2）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-29 19:39:46" itemprop="dateCreated datePublished" datetime="2019-07-29T19:39:46+08:00">2019-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-06-09 02:04:48" itemprop="dateModified" datetime="2023-06-09T02:04:48+08:00">2023-06-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI-related/" itemprop="url" rel="index"><span itemprop="name">OI-related</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="magic-treecf-1193b-ceoi-2019-day-2">Magic Tree（CF-1193B CEOI
+2019 Day 2）</h1>
+<h2 id="题目描述">题目描述：</h2>
+<p>给一个<span class="math inline">\(n\)</span>节点的树，其中有<span
+class="math inline">\(m\)</span>个点有果实，分别在编号为<span
+class="math inline">\(pi\)</span>的点上，在第<span
+class="math inline">\(di\)</span>天成熟，在成熟的那天收割有<span
+class="math inline">\(wi\)</span>的贡献。给出<span
+class="math inline">\(K,di&lt;=K\)</span>.
+通过断开树上的边来收割果实，每断开一个边，取不包含根的子树，获得上面所有成熟果实的贡献值，剩下的全部丢弃。每天都可以断任意条边。
+问总共能收获到的最大贡献。 <span id="more"></span></p>
+<h2 id="思路">思路：</h2>
+<p>这题有一个比较重要的结论，就是<strong>在第<span
+class="math inline">\(j\)</span>天割一条边<span
+class="math inline">\([x,f]\)</span>时，如果<span
+class="math inline">\(x\)</span>点为根的子树也有断掉的边时，那么这些边割掉的时间都必须小于等于<span
+class="math inline">\(j\)</span></strong>，其实也算不上啥结论，想想就知道了。</p>
+<h6 id="子任务1">子任务1</h6>
+<p>有上面的结论就比较简单了，状压枚举哪些果实要获得贡献，然后<span
+class="math inline">\(dfs\)</span>一遍判断时间上是否合法。
+即如果有一个果实<span class="math inline">\(x\)</span>是<span
+class="math inline">\(v\)</span>的祖先，且都被选，但<span
+class="math inline">\(D[v]&gt;D[x]\)</span>就不合法了。代码比较简单。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(mark[x]==ti)mxd[x]=D[x];</span><br><span class="line">	<span class="built_in">EOR</span>(G,i,x)&#123;</span><br><span class="line">		<span class="type">int</span> v=G.to[i];</span><br><span class="line">		<span class="keyword">if</span>(!<span class="built_in">dfs</span>(v))<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">if</span>(mark[x]==ti&amp;&amp;D[x]&lt;mxd[v])<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="built_in">chkmax</span>(mxd[x],mxd[v]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">loop</span>(i,<span class="number">1</span>&lt;&lt;m)&#123;</span><br><span class="line">		ti++;<span class="comment">//时间戳</span></span><br><span class="line">		ll sum=<span class="number">0</span>;</span><br><span class="line">		<span class="built_in">loop</span>(j,m)<span class="keyword">if</span>(i&gt;&gt;j&amp;<span class="number">1</span>)</span><br><span class="line">			mark[A[j+<span class="number">1</span>].p]=ti,sum+=A[j+<span class="number">1</span>].w;</span><br><span class="line">		<span class="built_in">FOR</span>(j,<span class="number">1</span>,n)mxd[j]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">dfs</span>(<span class="number">1</span>))<span class="built_in">chkmax</span>(ans,sum);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="子任务2">子任务2</h6>
+<p>没啥好说的，全加。</p>
+<h6 id="子任务3">子任务3</h6>
+<p>是一条链，且每个点贡献为<span
+class="math inline">\(1\)</span>,相当于数个数。用上面的结论可知，其实就是从下到上<span
+class="math inline">\(LIS\)</span>一下。</p>
+<h6 id="子任务45">子任务4，5</h6>
+<p>个人把两个合并起来了。。感觉分<span
+class="math inline">\(K&lt;=2\)</span>没啥意义。。<br />
+考虑<span class="math inline">\(f[n][k]\)</span>数组。<span
+class="math inline">\(f[x][j]\)</span>表示在以<span
+class="math inline">\(x\)</span>为根，前<span
+class="math inline">\(j\)</span>天能收割到的最大值。
+那么，我们有转移方程：</p>
+<p><span class="math display">\[
+f[x][j]=max((\sum f[v][D[x]])+W[x],\sum f[v][j]) (j&gt;=D[x])    
+\]</span></p>
+<p><span class="math display">\[
+f[x][j]=\sum f[v][j](j&lt;D[x])
+\]</span></p>
+<p>应该不难理解，代码如下： <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">EOR</span>(G,i,x)&#123;</span><br><span class="line">		<span class="type">int</span> v=G.to[i];</span><br><span class="line">		<span class="built_in">dfs</span>(v);</span><br><span class="line">		<span class="built_in">FOR</span>(j,<span class="number">0</span>,K)f[x][j]+=f[v][j];</span><br><span class="line">	&#125;</span><br><span class="line">	f[x][D[x]]+=W[x];</span><br><span class="line">	<span class="built_in">FOR</span>(i,<span class="number">1</span>,K)<span class="built_in">chkmax</span>(f[x][i],f[x][i<span class="number">-1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">FOR</span>(j,<span class="number">0</span>,K)<span class="built_in">chkmax</span>(ans,f[<span class="number">1</span>][j]);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="子任务678正解">子任务6,7,8（正解）</h6>
+<p>这里可以在分点打（个人觉得没啥必要）。。
+考虑原来的转移方程，其实每个<span
+class="math inline">\(f[x]\)</span>最初都是一个后缀，然后每次还会将所有儿子的状态合并上来，显然想到线段树合并，每棵树维护一个点的装态，最后向上合并即可。</p>
+<p>但是，还可以用启发式合并写，代码短且比较简练。 对每个节点开个<span
+class="math inline">\(map\)</span>（<span class="math inline">\(set&lt;
+pair &gt;\)</span>也行，随便）.表示每个点的<span
+class="math inline">\(dp\)</span>状态，由于从子节点转移上来都是用加法所以直接循环合并加上来即可</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(mp[x].<span class="built_in">size</span>()&lt;mp[v].<span class="built_in">size</span>())</span><br><span class="line">    <span class="built_in">swap</span>(mp[x],mp[v]);</span><br><span class="line"><span class="keyword">for</span>(it=mp[v].<span class="built_in">begin</span>();it!=mp[v].<span class="built_in">end</span>();it++)</span><br><span class="line">    mp[x][(*it).X]+=(*it).Y;</span><br></pre></td></tr></table></figure>
+<p>然后就是关键了，就是如何更新最大前缀。 还记得<span
+class="math inline">\(\sum
+f[v][D[x]]+W[x]\)</span>吗？这个值有可能更新掉<span
+class="math inline">\(j&gt;=D[x]\)</span>的所有边，所以不仅仅是直接插入一个点那么简单了。我们把每个在它之后的点都扫一遍，如果当前点的w值大于插入值<span
+class="math inline">\(val\)</span>，说明当前前缀更优，但由于<span
+class="math inline">\(val\)</span>会影响所有在当前位置之后的前缀，所以要在当前位置上减掉。否则，就在<span
+class="math inline">\(val\)</span>上减掉该值，并将枚举点删除。表示当前前缀被更新为新前缀</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mp[x][D[x]]+=W[x];<span class="comment">//加入一个新点（即一个新前缀）</span></span><br><span class="line">it=mp[x].<span class="built_in">upper_bound</span>(D[x]);</span><br><span class="line">ll val=W[x];<span class="comment">//表示新前缀最后一个点的值</span></span><br><span class="line"><span class="keyword">while</span>(it!=mp[x].<span class="built_in">end</span>())&#123;</span><br><span class="line">	ll w=it-&gt;Y;<span class="comment">//当前前缀的最后一个点值</span></span><br><span class="line">	<span class="keyword">if</span>(w&gt;=val)&#123;</span><br><span class="line">		it-&gt;Y-=val;<span class="comment">//使得当前前缀保持不变</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	val-=w;mp[x].<span class="built_in">erase</span>(it++);<span class="comment">//新前缀更优，删去原前缀的最后一个点值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个过程一定要好好理解，这种用点维护前缀的思想很重要。 #### AC代码
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FOR(i,l,r) for(int i=(l),i##R=(r);i&lt;=i##R;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOR(i,r,l) for(int i=(r),i##L=(l);i&gt;=i##L;i--)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> loop(i,n) for(int i=0,i##R=(n);i&lt;i##R;i++)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mms(a,x) memset(a,x,sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lowbit(x) (x&amp;(-x))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> X first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Y second</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> A,<span class="keyword">typename</span> B&gt;<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">chkmax</span><span class="params">(A &amp;x,<span class="type">const</span> B y)</span></span>&#123;<span class="keyword">if</span>(x&lt;y)x=y;&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> A,<span class="keyword">typename</span> B&gt;<span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">chkmin</span><span class="params">(A &amp;x,<span class="type">const</span> B y)</span></span>&#123;<span class="keyword">if</span>(x&gt;y)x=y;&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span>+<span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> n,m,K;</span><br><span class="line"><span class="type">int</span> fa[N];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Graph</span>&#123;</span><br><span class="line">	<span class="type">int</span> tot,to[N&lt;&lt;<span class="number">1</span>],nxt[N&lt;&lt;<span class="number">1</span>],head[N];</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;tot++;to[tot]=y;nxt[tot]=head[x];head[x]=tot;&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;<span class="built_in">mms</span>(head,<span class="number">-1</span>);tot=<span class="number">0</span>;&#125;</span><br><span class="line">	<span class="meta">#<span class="keyword">define</span> EOR(G,i,x) for(int i=G.head[x];i!=-1;i=G.nxt[i])</span></span><br><span class="line">&#125;G;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Fruit</span>&#123;</span><br><span class="line">	<span class="type">int</span> p,d,w;</span><br><span class="line">&#125;A[N];</span><br><span class="line"><span class="type">int</span> D[N],W[N];</span><br><span class="line">map&lt;<span class="type">int</span>,ll&gt;mp[N];</span><br><span class="line">map&lt;<span class="type">int</span>,ll&gt;::iterator it;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">EOR</span>(G,i,x)&#123;</span><br><span class="line">		<span class="type">int</span> v=G.to[i];</span><br><span class="line">		<span class="built_in">dfs</span>(v);</span><br><span class="line">		<span class="keyword">if</span>(mp[x].<span class="built_in">size</span>()&lt;mp[v].<span class="built_in">size</span>())<span class="built_in">swap</span>(mp[x],mp[v]);</span><br><span class="line">		<span class="keyword">for</span>(it=mp[v].<span class="built_in">begin</span>();it!=mp[v].<span class="built_in">end</span>();it++)mp[x][(*it).X]+=(*it).Y;</span><br><span class="line">	&#125;</span><br><span class="line">	mp[x][D[x]]+=W[x];</span><br><span class="line">	it=mp[x].<span class="built_in">upper_bound</span>(D[x]);</span><br><span class="line">	ll val=W[x];</span><br><span class="line">	<span class="keyword">while</span>(it!=mp[x].<span class="built_in">end</span>())&#123;</span><br><span class="line">		ll w=it-&gt;Y;</span><br><span class="line">		<span class="keyword">if</span>(w&gt;=val)&#123;</span><br><span class="line">			it-&gt;Y-=val;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		val-=w;mp[x].<span class="built_in">erase</span>(it++);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	G.<span class="built_in">clear</span>();</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;K);</span><br><span class="line">	<span class="built_in">FOR</span>(i,<span class="number">2</span>,n)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;fa[i]);</span><br><span class="line">		G.<span class="built_in">add</span>(fa[i],i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">FOR</span>(i,<span class="number">1</span>,m)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;A[i].p,&amp;A[i].d,&amp;A[i].w);</span><br><span class="line">		D[A[i].p]=A[i].d;</span><br><span class="line">		W[A[i].p]=A[i].w;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(it=mp[<span class="number">1</span>].<span class="built_in">begin</span>();it!=mp[<span class="number">1</span>].<span class="built_in">end</span>();it++)</span><br><span class="line">		ans+=it-&gt;Y;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/16994.html" rel="prev" title="俄罗斯套娃（JOISC 2016 Day 1）">
+      <i class="fa fa-chevron-left"></i> 俄罗斯套娃（JOISC 2016 Day 1）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/16107.html" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#magic-treecf-1193b-ceoi-2019-day-2"><span class="nav-number">1.</span> <span class="nav-text">Magic Tree（CF-1193B CEOI
+2019 Day 2）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">思路：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%90%E4%BB%BB%E5%8A%A11"><span class="nav-number">1.2.0.0.0.1.</span> <span class="nav-text">子任务1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%90%E4%BB%BB%E5%8A%A12"><span class="nav-number">1.2.0.0.0.2.</span> <span class="nav-text">子任务2</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%90%E4%BB%BB%E5%8A%A13"><span class="nav-number">1.2.0.0.0.3.</span> <span class="nav-text">子任务3</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%90%E4%BB%BB%E5%8A%A145"><span class="nav-number">1.2.0.0.0.4.</span> <span class="nav-text">子任务4，5</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AD%90%E4%BB%BB%E5%8A%A1678%E6%AD%A3%E8%A7%A3"><span class="nav-number">1.2.0.0.0.5.</span> <span class="nav-text">子任务6,7,8（正解）</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maodian Huang"
+      src="/images/pfp.png">
+  <p class="site-author-name" itemprop="name">Maodian Huang</p>
+  <div class="site-description" itemprop="description">A blog where I (try to) post regular updates about myself and stuffs I am interested in</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Geinzit" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Geinzit" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:heinz03huang@gmail.com" title="E-Mail → mailto:heinz03huang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/HuangHeinz" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;HuangHeinz" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@mdhuang" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@mdhuang" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/heinz_huang" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;heinz_huang" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/id/HeinzHuang" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;id&#x2F;HeinzHuang" rel="noopener" target="_blank"><i class="fab fa-steam fa-fw"></i>Steam</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-code"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maodian Huang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
